@@ -1,0 +1,44 @@
+version: "3.3"
+
+services:
+    sut:
+        container_name: test-bench
+        image: ${IMAGE_TAG}
+        environment:
+            TEST_ADDR: ${TEST_ADDR}
+        volumes:
+            - ./test.sh:/test.sh:ro
+        entrypoint: ["/test.sh"]
+        depends_on:
+            dmarc-srg:
+                condition: service_healthy
+
+    dmarc-srg:
+        image: ${IMAGE_TAG}
+        container_name: dmarc-srg
+        volumes:
+          - ../../docker/dmarc-srg/config.php:/var/www/html/config/conf.php:ro
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "curl",
+                    "-s",
+                    "--fail",
+                    "http://127.0.0.1/.nginx/status",
+                ]
+            start_period: 5s
+            interval: 15s
+            timeout: 1s
+        environment:
+            DB_HOST: $DMARC_SRG_DB_HOST
+            DB_NAME: $DMARC_SRG_DB_NAME
+            DB_USER: $DMARC_SRG_DB_USER
+            DB_PASSWORD: $DMARC_SRG_DB_PASSWORD
+            IMAP_HOST: $DMARC_SRG_IMAP_HOST
+            IMAP_USER: $DMARC_SRG_IMAP_USER
+            IMAP_PASSWORD: $DMARC_SRG_IMAP_PASSWORD
+            UI_PASSWORD: $DMARC_SRG_UI_PASSWORD
+        ports:
+            - ${DMARC_SRG_HTTP_ADDRESS:-8082}:80
+        restart: on-failure:2
