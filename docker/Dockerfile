@@ -17,6 +17,7 @@ RUN sed -i '/access_log/d' /etc/nginx/nginx.conf
 COPY nginx-host.conf /opt/docker/etc/nginx/vhost.common.d/20-nginx-host.conf
 COPY nginx-logs.conf /opt/docker/etc/nginx/conf.d/5-logs.conf
 COPY nginx-vhost.conf /opt/docker/etc/nginx/vhost.conf
+COPY config.php /var/www/html/config/conf.php
 
 USER application
 WORKDIR $WEB_DOCUMENT_ROOT
