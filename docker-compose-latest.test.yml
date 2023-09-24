@@ -16,8 +16,6 @@ services:
     dmarc-srg:
         image: ${IMAGE_TAG}
         container_name: dmarc-srg
-        volumes:
-          - ../../docker/dmarc-srg/config.php:/var/www/html/config/conf.php:ro
         healthcheck:
             test:
                 [
