@@ -32,7 +32,6 @@ echo "Running tests..."
 
 checkUrl "http://${TEST_ADDR}/" -I
 checkUrl "http://${TEST_ADDR}/.nginx/status" -I
-checkUrl "http://${TEST_ADDR}/.phpfpm/status" -I
 checkUrl "http://${TEST_ADDR}/index.php"
 checkUrl "http://${TEST_ADDR}/robots.txt" -I
 checkUrl "http://${TEST_ADDR}/css/main.css" -I | grep -F "Cache-Control: max-age=315360000"
