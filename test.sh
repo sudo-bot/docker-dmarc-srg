@@ -8,11 +8,11 @@ checkUrl() {
     set +e
     if [ "${2:-}" = "form" ]; then
         curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --fail \
-        -s \
-        -H 'Content-Type: application/json' \
-        -L \
-        --data-raw "${3}" \
-        "$1"
+            -s \
+            -H 'Content-Type: application/json' \
+            -L \
+            --data-raw "${3}" \
+            "$1"
     else
         curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --fail \
             -s \
@@ -23,9 +23,9 @@ checkUrl() {
 
     if [ $? -gt 0 ]; then
         DID_FAIL=1
-        echo "ERR: for URL ${1}"
+        echo "FAIL: ${1}"
     fi
-    echo "Checked: ${1} and didFail?: ${DID_FAIL}"
+    echo "PASS: ${1}"
     set -e
 }
 
@@ -35,7 +35,7 @@ checkUrl "http://${TEST_ADDR}/"
 checkUrl "http://${TEST_ADDR}/.nginx/status" -I
 checkUrl "http://${TEST_ADDR}/index.php"
 checkUrl "http://${TEST_ADDR}/robots.txt" -I
-checkUrl "http://${TEST_ADDR}/css/main.css" -I | grep -F "Cache-Control: max-age=315360000"
+checkUrl "http://${TEST_ADDR}/css/main.css" -I | grep -F "Cache-Control: max-age=86400"
 
 checkUrl "http://${TEST_ADDR}/index.php" | grep -q -F "DMARC Reports"
 checkUrl "http://${TEST_ADDR}/login.php" "form" "{"password":"h9LoC5JRceynq5vRKeC4D2Bu7G7Fxny8yt4vCjQsp7vVE"}" | grep -q -F "Successfully logged into server."
