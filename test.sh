@@ -25,6 +25,7 @@ checkUrl() {
         DID_FAIL=1
         echo "ERR: for URL ${1}"
     fi
+    echo "Checked: ${1} and didFail?: ${DID_FAIL}"
     set -e
 }
 
