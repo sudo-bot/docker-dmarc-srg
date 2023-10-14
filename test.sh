@@ -40,7 +40,7 @@ checkUrl "http://${TEST_ADDR}/robots.txt" -I
 checkUrl "http://${TEST_ADDR}/css/main.css" -I | grep -F "Cache-Control: max-age=86400"
 
 checkUrl "http://${TEST_ADDR}/index.php" | grep -q -F "DMARC Reports"
-checkUrl "http://${TEST_ADDR}/login.php" "form" "{"password":"h9LoC5JRceynq5vRKeC4D2Bu7G7Fxny8yt4vCjQsp7vVE"}" | grep -q -F "Successfully logged into server."
+checkUrl "http://${TEST_ADDR}/login.php" "form" "{"password":"public"}" | grep -q -F "Successfully logged into server."
 
 if [ $DID_FAIL -gt 0 ]; then
     echo "Some URLs failed"
