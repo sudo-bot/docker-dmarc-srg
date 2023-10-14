@@ -9,9 +9,9 @@ checkUrl() {
     if [ "${2:-}" = "form" ]; then
         curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --show-error --fail-with-body \
             -s \
+            -H 'Accept: application/json' \
             -H 'Content-Type: application/json' \
             -L \
-            -o /dev/stdout \
             --data-raw "${3}" \
             "$1"
     else
@@ -19,7 +19,6 @@ checkUrl() {
             -s \
             ${2:-} \
             -H 'Content-Type: application/json' \
-            -o /dev/stdout \
             "$1"
     fi
     set -e
