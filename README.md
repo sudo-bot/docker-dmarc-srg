@@ -31,20 +31,15 @@ That will be moved to `DMARC-PROCESSED.Aggregate` or `DMARC-PROCESSED.Invalid`.
 
 ## Usage
 
-Note: you need to login to ghcr.io using your GitHub account:
-
-```sh
-docker login ghcr.io
-```
-
 ```yml
 version: "2.3"
 
 services:
 
     dmarc-srg:
-        image: ${IMAGE_TAG}
+        image: docker.io/botsudo/docker-dmarc-srg
         container_name: dmarc-srg
+        user: application
         # If you want to mount a custom config and skip the ENVs
         #volumes:
         #  - ./config.php:/var/www/html/config/conf.php:ro
