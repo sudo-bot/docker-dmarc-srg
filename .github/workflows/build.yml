@@ -12,6 +12,7 @@ on:
 
 jobs:
     build-image:
+        name: Build the image
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
