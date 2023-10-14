@@ -7,26 +7,29 @@ DID_FAIL=0
 checkUrl() {
     set +e
     if [ "${2:-}" = "form" ]; then
-        curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --fail \
+        curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --show-error --fail-with-body \
             -s \
             -H 'Content-Type: application/json' \
             -L \
+            -o /dev/stdout \
             --data-raw "${3}" \
             "$1"
     else
-        curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --fail \
+        curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --show-error --fail-with-body \
             -s \
             ${2:-} \
             -H 'Content-Type: application/json' \
+            -o /dev/stdout \
             "$1"
     fi
+    set -e
 
     if [ $? -gt 0 ]; then
+        echo "FAIL: ${1} ($?)"
         DID_FAIL=1
-        echo "FAIL: ${1}"
+        return;
     fi
     echo "PASS: ${1}"
-    set -e
 }
 
 echo "Running tests..."
