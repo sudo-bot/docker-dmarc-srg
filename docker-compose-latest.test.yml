@@ -5,7 +5,7 @@ services:
         container_name: test-bench
         image: ${IMAGE_TAG}
         environment:
-            TEST_ADDR: ${TEST_ADDR}
+            TEST_ADDR: dmarc-srg
         volumes:
             - ./test.sh:/test.sh:ro
         entrypoint: ["/test.sh"]
@@ -16,6 +16,7 @@ services:
     dmarc-srg:
         image: ${IMAGE_TAG}
         container_name: dmarc-srg
+        user: application
         healthcheck:
             test:
                 [
@@ -36,7 +37,5 @@ services:
             IMAP_HOST: $DMARC_SRG_IMAP_HOST
             IMAP_USER: $DMARC_SRG_IMAP_USER
             IMAP_PASSWORD: $DMARC_SRG_IMAP_PASSWORD
-            UI_PASSWORD: $DMARC_SRG_UI_PASSWORD
-        ports:
-            - ${DMARC_SRG_HTTP_ADDRESS:-8082}:80
+            UI_PASSWORD: public
         restart: on-failure:2

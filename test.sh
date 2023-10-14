@@ -8,7 +8,6 @@ checkUrl() {
     set +e
     if [ "${2:-}" = "form" ]; then
         curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --show-error --fail-with-body \
-            -s \
             -H 'Accept: application/json' \
             -H 'Content-Type: application/json' \
             -L \
@@ -16,7 +15,6 @@ checkUrl() {
             "$1"
     else
         curl -# --cookie-jar /tmp/test.cookie-jar -b /tmp/test.cookie-jar --show-error --fail-with-body \
-            -s \
             ${2:-} \
             -H 'Content-Type: application/json' \
             "$1"
@@ -40,7 +38,7 @@ checkUrl "http://${TEST_ADDR}/robots.txt" -I
 checkUrl "http://${TEST_ADDR}/css/main.css" -I | grep -F "Cache-Control: max-age=86400"
 
 checkUrl "http://${TEST_ADDR}/index.php" | grep -q -F "DMARC Reports"
-checkUrl "http://${TEST_ADDR}/login.php" "form" "{"password":"public"}" | grep -q -F "Successfully logged into server."
+checkUrl "http://${TEST_ADDR}/login.php" "form" '{"password":"public"}' | grep -q -F "Authentication succeeded"
 
 if [ $DID_FAIL -gt 0 ]; then
     echo "Some URLs failed"
