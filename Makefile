@@ -29,6 +29,9 @@ test: run-test cleanup-test
 run-test:
 	TEST_ADDR="${TEST_ADDR}" \
 	IMAGE_TAG="${IMAGE_TAG}" \
+	DMARC_SRG_UI_PASSWORD="public" \
+	# Random port maybe free ?
+	DMARC_SRG_HTTP_ADDRESS="8912" \
 	docker-compose -f docker-compose-latest.test.yml up --exit-code-from=sut --abort-on-container-exit
 
 cleanup-test:
