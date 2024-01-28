@@ -38,4 +38,10 @@ services:
             IMAP_USER: $DMARC_SRG_IMAP_USER
             IMAP_PASSWORD: $DMARC_SRG_IMAP_PASSWORD
             UI_PASSWORD: public
+            MAILBOX_NAME: DMARC
+            MAILBOXES_WHEN_DONE_MOVE_TO: DMARC-PROCESSED.Aggregate
+            MAILBOXES_WHEN_FAILED_MOVE_TO: DMARC-PROCESSED.Invalid
+            # Directories are not enabled
+            #DIRECTORIES_WHEN_DONE_MOVE_TO: DMARC-PROCESSED.Aggregate
+            #DIRECTORIES_WHEN_FAILED_MOVE_TO: DMARC-PROCESSED.Invalid
         restart: on-failure:2

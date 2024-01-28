@@ -6,8 +6,8 @@ This image uses:
 - Nginx as a web server with PHP-FPM
 
 Tables will be prefixed with: `dmarc-srg_` by default.
-And require a `DMARC` IMAP folder with unread reports.
-That will be moved to `DMARC-PROCESSED.Aggregate` or `DMARC-PROCESSED.Invalid`.
+And require a `${MAILBOX_NAME}` IMAP folder with unread reports.
+That will be moved to `${MAILBOXES_WHEN_DONE_MOVE_TO}` or `${MAILBOXES_WHEN_FAILED_MOVE_TO}`.
 
 ## TODO
 
@@ -23,6 +23,9 @@ That will be moved to `DMARC-PROCESSED.Aggregate` or `DMARC-PROCESSED.Invalid`.
 - `IMAP_USER` (The IMAP user)
 - `IMAP_PASSWORD` (The IMAP password)
 - `UI_PASSWORD` (The web UI password)
+- `MAILBOX_NAME` (The mailbox folder name where reports are stored to be ingested)
+- `MAILBOXES_WHEN_DONE_MOVE_TO` (The mailbox folder name where reports are stored when they passed ingestion)
+- `MAILBOXES_WHEN_FAILED_MOVE_TO` (The mailbox folder name where reports are stored when they failed ingestion)
 
 #### For `utils/summary_report.php`
 
@@ -64,6 +67,10 @@ services:
             IMAP_USER: $DMARC_SRG_IMAP_USER
             IMAP_PASSWORD: $DMARC_SRG_IMAP_PASSWORD
             UI_PASSWORD: $DMARC_SRG_UI_PASSWORD
+            # Use "." or "/" to use sub-folders
+            MAILBOX_NAME: DMARC
+            MAILBOXES_WHEN_DONE_MOVE_TO: DMARC-PROCESSED.Aggregate
+            MAILBOXES_WHEN_FAILED_MOVE_TO: DMARC-PROCESSED.Invalid
         ports:
             - ${DMARC_SRG_HTTP_ADDRESS:-8082}:80
         restart: on-failure:2

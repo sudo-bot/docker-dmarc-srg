@@ -44,7 +44,7 @@ $mailboxes = [
     // Mailbox password.
     'password'        => getenv('IMAP_PASSWORD'),
     // Mailbox name
-    'mailbox'         => 'DMARC',
+    'mailbox'         => getenv('MAILBOX_NAME'),
     // IMAP authorization methods to be excluded.
     // For example: 'auth_exclude' => [ 'GSSAPI', 'NTLM' ]
     'auth_exclude'    => []
@@ -89,14 +89,14 @@ $fetcher = [
          * 'when_done' => [ 'mark_seen', 'move_to:done' ],
          * The default value is 'mark_seen'.
          */
-        'when_done' => 'move_to:DMARC-PROCESSED.Aggregate',
+        'when_done' => 'move_to:' . getenv('MAILBOXES_WHEN_DONE_MOVE_TO'),
 
         /**
          * What to do with the email message when a report from it has been rejected.
          * The same actions are available as for the when_done.
          * The default value is 'move_to:failed'.
          */
-        'when_failed' => 'move_to:DMARC-PROCESSED.Invalid'
+        'when_failed' => 'move_to:' . getenv('MAILBOXES_WHEN_FAILED_MOVE_TO'),
     ],
     'directories' => [
         // How many report files will be processed at once maximum. 0 to disable any limiting.
@@ -108,7 +108,7 @@ $fetcher = [
          * for detailed description.
          * The default value is 'delete'.
          */
-        'when_done'        => 'move_to:DMARC-PROCESSED.Aggregate',
+        'when_done'        => 'move_to:' . getenv('DIRECTORIES_WHEN_DONE_MOVE_TO'),
 
         /**
          * What to do with the report file when it has been rejected.
@@ -116,7 +116,7 @@ $fetcher = [
          * The default value is 'move_to:failed'.
          *
          */
-        'when_failed'      => 'move_to:DMARC-PROCESSED.Invalid'
+        'when_failed'      => 'move_to:' . getenv('DIRECTORIES_WHEN_FAILED_MOVE_TO'),
     ],
     /**
      * Domains matching this regular expression will be automatically added to the database from processed
