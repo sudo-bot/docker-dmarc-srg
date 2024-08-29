@@ -1,8 +1,8 @@
 FROM webdevops/php-nginx:8.2-alpine
 
-ARG VERSION="v1.8"
+ARG VERSION="v2.2.1"
 
-ARG DIST_URL="https://github.com/liuch/dmarc-srg/archive/refs/tags/v1.8.tar.gz"
+ARG DIST_URL="https://github.com/liuch/dmarc-srg/archive/refs/tags/v2.2.1.tar.gz"
 ARG BUILD_DATE
 ARG VCS_REF
 ENV PHP_DISMOD=amqp,apcu,bcmath,bz2,calendar,exif,ffi,gd,gettext,gmp,imagick,intl,ldap,memcached,mongodb,pcntl,mysqli,pdo_pgsql,pgsql,redis,shmop,soap,sockets,sysvmsg,sysvsem,sysvshm,vips,xmlrpc,xsl,yaml,ioncube
@@ -21,15 +21,18 @@ COPY nginx-vhost.conf /opt/docker/etc/nginx/vhost.conf
 USER application
 WORKDIR $WEB_DOCUMENT_ROOT
 
-RUN curl -# -L -o dmarc-srg.tar.gz ${DIST_URL} && \
-    tar -xzf dmarc-srg.tar.gz -C $WEB_DOCUMENT_ROOT --strip-components=1 && \
-    rm dmarc-srg.tar.gz && \
-    cd $WEB_DOCUMENT_ROOT && \
-    curl -# -L -o - https://patch-diff.githubusercontent.com/raw/liuch/dmarc-srg/pull/80.diff | patch -p1 && \
-    rm -vr *.md && \
+RUN set -eux; \
+    curl -# -L -o dmarc-srg.tar.gz ${DIST_URL}; \
+    tar -xzf dmarc-srg.tar.gz -C $WEB_DOCUMENT_ROOT --strip-components=1; \
+    rm dmarc-srg.tar.gz; \
+    cd $WEB_DOCUMENT_ROOT; \
+    # curl -# -L -o - https://patch-diff.githubusercontent.com/raw/liuch/dmarc-srg/pull/<pr-id>.diff | patch -p1; \
+    rm -vr *.md; \
     tree
 
 COPY config.php /var/www/html/config/conf.php
+
+RUN diff -u $WEB_DOCUMENT_ROOT/config/conf.sample.php /var/www/html/config/conf.php
 
 # Metadata
 LABEL org.label-schema.vendor="liuch" \
