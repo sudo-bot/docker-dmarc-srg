@@ -32,7 +32,7 @@ RUN set -eux; \
 
 COPY config.php /var/www/html/config/conf.php
 
-RUN diff -u $WEB_DOCUMENT_ROOT/config/conf.sample.php /var/www/html/config/conf.php
+#RUN diff -u $WEB_DOCUMENT_ROOT/config/conf.sample.php /var/www/html/config/conf.php
 
 # Metadata
 LABEL org.label-schema.vendor="liuch" \
