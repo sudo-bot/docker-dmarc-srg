@@ -34,6 +34,14 @@ That will be moved to `${MAILBOXES_WHEN_DONE_MOVE_TO}` or `${MAILBOXES_WHEN_FAIL
 
 ## Usage
 
+## Fetching reports
+
+A cron is located in `/var/spool/cron/crontabs/application` and will fetch reports hourly.
+Feel free to mount another [crontab file](./docker/crontab) to `/var/spool/cron/crontabs/application`
+See: [cron setup from the upstream image](https://github.com/webdevops/Dockerfile/issues/280)
+
+## Docker compose
+
 ```yml
 version: "2.3"
 
