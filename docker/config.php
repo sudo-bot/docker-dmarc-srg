@@ -114,11 +114,13 @@ $admin = [
     'password' => getenv('UI_PASSWORD'),
 ];
 
+$domainVerification = getenv('DOMAIN_VERIFICATION');
+
 $users = [
     // Enables the use of multiple users in the web interface. The authentication dialog will ask for a username and
     // password. Use `admin` as the username for the above password. To add new users, use Administration -> Users.
     // The default value is false.
-    'user_management' => false,
+    'user_management' => (bool) getenv('USER_MANAGEMENT'),
 
     /**
      * Domain ownership verification method for users who are authorized to add domains.
@@ -127,7 +129,7 @@ $users = [
      * 'dns'  - Verification by adding DNS TXT record like dmarcsrg-verification=...
      * The default value is 'none'.
      */
-    'domain_verification' => 'none'
+    'domain_verification' => in_array($domainVerification, ['none', 'dns']) ? $domainVerification : 'none',
 ];
 
 //

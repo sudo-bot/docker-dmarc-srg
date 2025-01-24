@@ -23,6 +23,8 @@ That will be moved to `${MAILBOXES_WHEN_DONE_MOVE_TO}` or `${MAILBOXES_WHEN_FAIL
 - `IMAP_USER` (The IMAP user)
 - `IMAP_PASSWORD` (The IMAP password)
 - `UI_PASSWORD` (The web UI password)
+- `USER_MANAGEMENT` optional: (A boolean to enable managing users from the Web UI)
+- `DOMAIN_VERIFICATION` optional: (Domain ownership verification method for users who are authorized to add domains. Valid values: `dns` and `none`.)
 - `MAILBOX_NAME` (The mailbox folder name where reports are stored to be ingested)
 - `MAILBOXES_WHEN_DONE_MOVE_TO` (The mailbox folder name where reports are stored when they passed ingestion)
 - `MAILBOXES_WHEN_FAILED_MOVE_TO` (The mailbox folder name where reports are stored when they failed ingestion)
@@ -43,8 +45,6 @@ See: [cron setup from the upstream image](https://github.com/webdevops/Dockerfil
 ## Docker compose
 
 ```yml
-version: "2.3"
-
 services:
 
     dmarc-srg:
