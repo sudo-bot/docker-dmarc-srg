@@ -2,7 +2,7 @@
 
 This image uses:
 
-- Alpine as a base image (`webdevops/php-nginx:8.2-alpine`)
+- Alpine as a base image (`webdevops/php-nginx:8.3-alpine`)
 - Nginx as a web server with PHP-FPM
 
 Tables will be prefixed with: `dmarc-srg_` by default.
