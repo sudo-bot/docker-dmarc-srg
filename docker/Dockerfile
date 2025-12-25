@@ -1,8 +1,8 @@
 FROM webdevops/php-nginx:8.3-alpine
 
-ARG VERSION="v2.2.1"
+ARG VERSION="v3.0-pre"
 
-ARG DIST_URL="https://github.com/liuch/dmarc-srg/archive/refs/tags/v2.2.1.tar.gz"
+ARG DIST_URL="https://github.com/liuch/dmarc-srg/archive/refs/tags/v$VERSION.tar.gz"
 ARG BUILD_DATE
 ARG VCS_REF
 ENV PHP_DISMOD=amqp,apcu,bcmath,bz2,calendar,exif,ffi,gd,gettext,gmp,imagick,intl,ldap,memcached,mongodb,pcntl,mysqli,pdo_pgsql,pgsql,redis,shmop,soap,sockets,sysvmsg,sysvsem,sysvshm,vips,xmlrpc,xsl,yaml,ioncube
